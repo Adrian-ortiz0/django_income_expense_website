@@ -1,18 +1,67 @@
-{% extends "base_auth.html" %}
-
+{% extends 'base_auth.html' %}
+{% load static %}
 {% block content %}
 
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="card-title text-center mb-4">
+          <h4>Register for a free account</h4>
+        </div>
 
-<div class="card">
+        <form action="" method="post">
+          <div class="form-group mb-3">
+            <input 
+              type="text" 
+              name="username"
+              placeholder="Username" 
+              id="usernameField" 
+              class="form-control form-control-sm" 
+              required
+            />
+          </div>
 
+          <div class="form-group mb-3">
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Email" 
+              id="emailField" 
+              class="form-control form-control-sm" 
+              required
+            />
+          </div>
+
+          <div class="form-group mb-1 position-relative">
+            <input 
+              type="password" 
+              name="password"
+              placeholder="Password" 
+              id="passwordField" 
+              class="form-control form-control-sm" 
+              required
+            />
+            <small 
+              id="togglePassword" 
+              class="position-absolute" 
+              style="right: 10px; top: 8px; cursor: pointer; color: #007bff;">
+              SHOW
+            </small>
+          </div>
+
+          <div class="form-group mt-4">
+            <input 
+              type="submit" 
+              value="Register" 
+              class="btn btn-primary btn-block" 
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="card-body">
-
-    <h1>Login</h1>
-
-</div>
-
 
 {% endblock content %}
 
