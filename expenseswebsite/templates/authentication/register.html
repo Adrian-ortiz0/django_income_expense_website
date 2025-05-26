@@ -21,7 +21,10 @@
               required
             />
           </div>
+          <div class="invalid_feedback" style="display:none">
 
+          </div>
+          <p class="text-sm text-success usernameSuccessOutput"></p>
           <div class="form-group mb-3">
             <input 
               type="email" 
@@ -32,7 +35,9 @@
               required
             />
           </div>
-
+            <div class="emailFeedBackArea" style="display:none">
+          </div>
+          <p class="text-sm text-success emailSuccessOutput"></p>
           <div class="form-group mb-1 position-relative">
             <input 
               type="password" 
@@ -62,6 +67,8 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'js/register.js' %}"></script>
 
 {% endblock content %}
 
