@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from .utils import token_generator
 
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
@@ -39,13 +39,14 @@ class RegistrationView(View):
                 user.is_active = False
                 user.save()
                 email_subject = 'Activate your account'
-                # path_to_view 
+                # - path_to_view 
                 # - getting domain we are on
                 # - relative url to verification
                 # - encode uid 
                 # - token
                 
                 uidb64= urlsafe_base64_encode(force_bytes(user.pk))
+                
                 
                 
                 domain=get_current_site(request).domain
@@ -92,5 +93,25 @@ class UserNameValidationView(View):
     
 class VerificationView(View):
     def get(self, request, uidb64, token):
+        try:
+            id=force_text(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(pk=id)
+            
+            if not token_generator.check_token(user, token):
+                return redirect('login' + '?message='+'User already activated')
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+            
+            messages.success(request, 'Account activated successfully')
+            return redirect('login')
+        except Exception as ex:
+            pass
+        
         return redirect('login')
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'authentication/login.html')
     

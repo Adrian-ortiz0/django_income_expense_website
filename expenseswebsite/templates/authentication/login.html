@@ -1,18 +1,81 @@
-{% extends "base_auth.html" %}
-
+{% extends 'base_auth.html' %}
+{% load static %}
 {% block content %}
 
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="card-title text-center mb-4">
+          <h4>Register for a free account</h4>
+        </div>
+        
 
-<div class="card">
+        <form action="{% url 'register' %}" method="post">
 
+          {% csrf_token %}
+          {% include 'partials/_messages.html' %}
+
+          <div class="form-group mb-3">
+            <input 
+              type="text" 
+              name="username"
+              placeholder="Username" 
+              id="usernameField" 
+              class="form-control form-control-sm" 
+              value="{{fieldValues.username}}" 
+              required
+            />
+          </div>
+          <div class="invalid_feedback" style="display:none">
+
+          </div>
+          <p class="text-sm text-success usernameSuccessOutput"></p>
+          <div class="form-group mb-3">
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Email" 
+              id="emailField" 
+              class="form-control form-control-sm"
+              value="{{fieldValues.email}}" 
+              required
+            />
+          </div>
+            <div class="emailFeedBackArea" style="display:none">
+          </div>
+          <p class="text-sm text-success emailSuccessOutput"></p>
+          <div class="form-group mb-1 position-relative">
+            <input 
+              type="password" 
+              name="password"
+              placeholder="Password" 
+              id="passwordField" 
+              class="form-control form-control-sm" 
+              required
+            />
+            <small 
+              id="togglePassword" 
+              class="position-absolute showPasswordToggle" 
+              style="right: 10px; top: 8px; cursor: pointer; color: #007bff;">
+              SHOW
+            </small>
+          </div>
+
+          <div class="form-group mt-4">
+            <input 
+              type="submit" 
+              value="Register" 
+              class="btn btn-primary btn-block submit-btn" 
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="card-body">
-
-    <h1>Login</h1>
-
-</div>
-
+<script src="{% static 'js/register.js' %}"></script>
 
 {% endblock content %}
 
