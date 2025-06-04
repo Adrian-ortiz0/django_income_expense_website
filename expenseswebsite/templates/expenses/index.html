@@ -2,25 +2,59 @@
 {% load static %}
 {% block content %}
 
-<div class="container">
+<div class="container my-4">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-md-9">
+            <nav aria-label="breadcrumb" class="bg-light p-3 rounded shadow-sm">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="/" class="text-decoration-none text-primary fw-semibold">
+                            <i class="bi bi-wallet2 me-1"></i>Expenses
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">
+                        <i class="bi bi-list-ul me-1"></i>My Expenses
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+            <a href="{% url 'add-expenses' %}" class="btn btn-primary shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Add Expense
+            </a>
+        </div>
+        <div class="container">
+
+
+            {% if expenses.count %}
+
+
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount (CURRENCY)</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{expense.amount}}</td>
+                        <td>{{expense.category}}</td>
+                        <td>{{expense.description}}</td>
+                        <td>{{expense.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
 
     {% include 'partials/_messages.html' %}
-        <h1>
-            Expenses List
-        </h1>
-    
-        <ul class="list-group">
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-            <li class="list-group-item">Bought Beer</li>
-        </ul>
 </div>
+
 {% endblock content %}
