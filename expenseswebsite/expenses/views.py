@@ -43,3 +43,47 @@ def add_expense(request):
         messages.success(request, 'Expense saved successfully')
         
         return redirect('expenses')
+
+def expense_edit(request, id):
+    expense= Expense.objects.get(pk=id)
+    categories = Category.objects.all()
+    context = {
+        'expense': expense,
+        'values': expense,
+        'categories': categories,
+    }
+    if request.method == "GET":
+        return render(request, 'expenses/expense-edit.html', context)
+    if request.method == "POST":
+        amount = request.POST["amount"]
+        
+        if not amount:
+            messages.error(request, "Amount is required")
+            return render(request, "expenses/expense-edit.html", context)
+        description = request.POST["description"]
+        date = request.POST['expense_date']
+        category = request.POST['category']
+        
+        if not description:
+            messages.error(request, "Description is required")
+            return render(request, "expenses/expense-edit.html", context)
+        
+        expense.amount = amount
+        expense.date = date
+        expense.category = category
+        expense.description = description
+        expense.owner = request.user
+        expense.save()
+        messages.success(request, 'Expense update successfully')
+        
+        return redirect('expenses')
+        
+    else:
+        messages.info(request, 'Handling post form')
+        return render(request, 'expenses/expense-edit.html', context)
+
+def delete_expense(request, id):
+    expense=Expense.objects.get(pk=id)
+    expense.delete()
+    messages.success(request, 'Expense deleted successfully')
+    return redirect('expenses')
