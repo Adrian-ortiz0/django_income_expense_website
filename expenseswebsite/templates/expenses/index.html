@@ -73,7 +73,6 @@
       </div>
     </div>
 
-    <!-- Tabla principal -->
     <div class="app-table card-table" id="appTable">
       <table class="table table-hover">
         <thead>
@@ -101,10 +100,8 @@
       </table>
     </div>
 
-    <!-- Texto cuando no hay resultados -->
     <p class="no-results" id="noResults" style="display: none;">No results found 😢</p>
 
-    <!-- Tabla de búsqueda -->
     <div class="table-output card-table" id="searchTable" style="display: none;">
       <table class="table table-hover">
         <thead>
@@ -117,12 +114,10 @@
           </tr>
         </thead>
         <tbody id="searchResultsBody" class="table-body">
-          <!-- Resultados de JS -->
         </tbody>
       </table>
     </div>
 
-    <!-- Paginación -->
     <div class="pagination-container">
       <div>
         <small>Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</small>
