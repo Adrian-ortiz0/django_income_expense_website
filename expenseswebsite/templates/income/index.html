@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Income</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Income</li>
+      </ol>
+    </nav>
+    <a href="{% url 'add-income' %}" class="btn btn-primary">+ Add Income</a>
+  </div>
+
+  {% include 'partials/_messages.html' %}
+
+  {% if income.count %}
+  <div class="row mb-3">
+    <div class="col-md-4 offset-md-8">
+      <input type="text" class="form-control" id="searchField" placeholder="Search income...">
+    </div>
+  </div>
+
+  <div class="table-responsive app-table">
+    <table class="table table-bordered table-hover shadow-sm rounded">
+      <thead class="thead-light">
+        <tr>
+          <th>Amount ({{currency}})</th>
+          <th>Source</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for income in page_obj %}
+        <tr>
+          <td>{{ income.amount }}</td>
+          <td>{{ income.source }}</td>
+          <td>{{ income.description }}</td>
+          <td>{{ income.date }}</td>
+          <td>
+            <a href="{% url 'income-edit' income.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="text-center text-muted no-results" style="display: none;">No results found.</p>
+
+  <div class="table-output" style="display: none;">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover shadow-sm rounded">
+        <thead class="thead-light">
+          <tr>
+            <th>Amount ({{currency}})</th>
+            <th>Source</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-4 pagination-container">
+    <div>
+      Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </div>
+    <ul class="pagination mb-0">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo; 1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  {% else %}
+  <div class="alert alert-info mt-4" role="alert">
+    No income records found.
+  </div>
+  {% endif %}
+</div>
+
+<script src="{% static 'js/searchIncome.js' %}"></script>
+{% endblock content %}
